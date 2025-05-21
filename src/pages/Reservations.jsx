@@ -6,6 +6,7 @@ import { getIcon } from '../utils/iconUtils';
 // Import icons
 const MapPinIcon = getIcon('map-pin');
 const PhoneIcon = getIcon('phone');
+const ClockIcon = getIcon('clock');
 const ChevronRightIcon = getIcon('chevron-right');
 
 function Reservations() {
@@ -55,7 +56,7 @@ function Reservations() {
                 </div>
                 
                 <div className="flex items-start">
-                  <getIcon('clock').type className="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
+                  <ClockIcon className="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
                   <div>
                     <p className="font-medium">Hours</p>
                     <div className="text-surface-600 dark:text-surface-400 text-sm grid grid-cols-2 gap-x-2">
