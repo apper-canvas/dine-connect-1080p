@@ -7,8 +7,8 @@ import { CartProvider } from './contexts/CartContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <App />
-      <CartProvider>
-        <App />
-      </CartProvider>
+    <CartProvider>
+      <App />
+    </CartProvider>
+  </BrowserRouter>
 );
