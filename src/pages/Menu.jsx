@@ -179,7 +179,7 @@ const Menu = () => {
   });
 
   const sortedItems = [...filteredItems].sort((a, b) => {
-    return categoryMatch && searchMatch && dietaryMatch;
+    return a.category.localeCompare(b.category);
   });
   
   // Toggle dietary filter
@@ -366,7 +366,7 @@ const Menu = () => {
                     onClick={() => toggleDietaryFilter(option.id)}
                   >
                     <DietaryIcon className="w-4 h-4 mr-2" />
-                    <DietaryIcon className="w-4 h-4 mr-2" />
+                    <span>{option.name}</span>
                   </button>
                 );
               })}
