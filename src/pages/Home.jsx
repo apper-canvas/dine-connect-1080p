@@ -10,6 +10,7 @@ const StarIcon = getIcon('star');
 const ChevronRightIcon = getIcon('chevron-right');
 const ClockIcon = getIcon('clock');
 const MapPinIcon = getIcon('map-pin');
+const XIcon = getIcon('x');
 const PhoneIcon = getIcon('phone');
 
 function Home() {
@@ -96,7 +97,7 @@ function Home() {
               className="text-surface-400 hover:text-surface-600 dark:text-surface-500 dark:hover:text-surface-300"
               aria-label="Dismiss offer"
             >
-              <getIcon('x').type className="w-4 h-4" />
+              <XIcon className="w-4 h-4" />
             </button>
           </div>
         </motion.div>
