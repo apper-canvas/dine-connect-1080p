@@ -61,7 +61,7 @@
   }
   
   .container-custom {
-    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full;
   }
 }
 
@@ -77,4 +77,13 @@
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
   }
+  
+  .fixed-header {
+    @apply fixed top-0 left-0 right-0 z-40;
+  }
+  
+  .fixed-footer {
+    @apply fixed bottom-0 left-0 right-0 z-40;
+  }
+  
 }

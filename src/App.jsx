@@ -63,36 +63,49 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col relative">
       {/* Logo Bar */}
-      <div className="bg-white dark:bg-surface-800 shadow-sm border-b border-surface-200 dark:border-surface-700">
+      <div className="bg-white dark:bg-surface-800 shadow-sm border-b border-surface-200 dark:border-surface-700 fixed top-0 left-0 right-0 z-40">
         <div className="container-custom py-3 flex items-center justify-between">
           <div className="flex items-center">
             <img src="https://source.unsplash.com/random/40x40/?restaurant-logo" alt="DineConnect Logo" className="w-10 h-10 rounded-md mr-3" />
             <h1 className="text-xl font-bold text-primary">DineConnect</h1>
           </div>
           
-          {/* Mobile menu toggle */}
-          <div className="flex items-center md:hidden">
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700 mr-2"
-              aria-label="Toggle dark mode"
-            >
-              {darkMode ? <SunIcon className="w-5 h-5 text-yellow-400" /> : <MoonIcon className="w-5 h-5 text-secondary" />}
-            </button>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {mobileMenuOpen ? 
-                <XIcon className="w-5 h-5 text-surface-600 dark:text-surface-300" /> : 
-                <BurgerMenuIcon className="w-5 h-5 text-surface-600 dark:text-surface-300" />
-              }
-            </button>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-1">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 rounded-lg transition-all ${
+                    isActive
+                      ? "bg-primary text-white shadow-sm"
+                      : "text-surface-700 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700"
+                  }`
+                }
+              >
+                <item.icon className="w-5 h-5 mr-2" />
+                <span className="font-medium">{item.label}</span>
+              </NavLink>
+            ))}
           </div>
-          
-          {/* Desktop Dark Mode Toggle */}
-          <div className="hidden md:block">
+
+          <div className="flex items-center">
+            {/* Mobile menu toggle */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700 mr-2"
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              >
+                {mobileMenuOpen ? 
+                  <XIcon className="w-5 h-5 text-surface-600 dark:text-surface-300" /> : 
+                  <BurgerMenuIcon className="w-5 h-5 text-surface-600 dark:text-surface-300" />
+                }
+              </button>
+            </div>
+            
+            {/* Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700"
@@ -108,7 +121,7 @@ function App() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
-            className="fixed inset-0 z-50 bg-black bg-opacity-50 md:hidden"
+            className="fixed inset-0 z-50 bg-black bg-opacity-70 md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -116,6 +129,7 @@ function App() {
           >
             <motion.div 
               className="absolute top-0 right-0 h-full w-64 bg-white dark:bg-surface-800 shadow-lg"
+              style={{ top: '0', marginTop: '0' }}
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -146,7 +160,7 @@ function App() {
       </AnimatePresence>
 
       {/* Main content */}
-      <main className="flex-grow pb-16 pt-2">
+      <main className="flex-grow pt-20 pb-16 md:pb-6">
         <div className="container-custom">
           <AnimatePresence mode="wait">
             <motion.div
@@ -155,7 +169,7 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="min-h-[calc(100vh-13rem)]"
+              className="min-h-[calc(100vh-10rem)]"
             >
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -171,7 +185,7 @@ function App() {
       </main>
 
       {/* Bottom Navigation for Mobile and Tablet */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700 md:hidden z-40">
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700 md:hidden z-40 shadow-lg">
         <div className="grid grid-cols-5 h-14">
           {navItems.map((item) => (
             <NavLink
@@ -189,30 +203,6 @@ function App() {
               <span>{item.label}</span>
             </NavLink>
           ))}
-        </div>
-      </div>
-
-      {/* Desktop Navigation */}
-      <div className="hidden md:block fixed bottom-0 left-0 right-0 bg-white dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700">
-        <div className="container-custom py-3">
-          <div className="flex justify-center space-x-1">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  `flex items-center px-4 py-2 rounded-lg transition-all ${
-                    isActive
-                      ? "bg-primary text-white shadow-md"
-                      : "text-surface-700 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700"
-                  }`
-                }
-              >
-                <item.icon className="w-5 h-5 mr-2" />
-                <span className="font-medium">{item.label}</span>
-              </NavLink>
-            ))}
-          </div>
         </div>
       </div>
 
