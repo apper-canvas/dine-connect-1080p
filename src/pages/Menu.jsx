@@ -240,6 +240,153 @@ const Menu = () => {
     );
   };
   
+  // Render a single menu item card
+  const renderMenuItemCard = (item) => {
+    const isExpanded = expandedItemId === item.id;
+    const tagsToShow = [];
+    
+    // Add special tags
+    if (item.signature) tagsToShow.push('signature');
+    if (item.seasonal) tagsToShow.push('seasonal');
+    if (item.tags && item.tags.includes('new')) tagsToShow.push('new');
+    if (item.tags && item.tags.includes('popular')) tagsToShow.push('popular');
+    if (item.tags && item.tags.includes('spicy')) tagsToShow.push('spicy');
+    
+    return (
+      <motion.div
+        key={item.id}
+        layout="position"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className="menu-card"
+      >
+        <div className="relative overflow-hidden cursor-pointer" onClick={() => openItemDetail(item)}>
+          <LazyImage 
+            src={item.image} 
+            alt={item.name}
+            className="h-48 overflow-hidden"
+          />
+          
+          {/* Special Tags (New, Signature, Seasonal) */}
+          {tagsToShow.length > 0 && (
+            <div className="absolute top-3 left-3 flex flex-wrap">
+              {tagsToShow.map(tag => renderTag(tag))}
+            </div>
+          )}
+          
+          {/* Dietary Badges */}
+          {item.dietary.length > 0 && (
+            <div className="absolute bottom-3 left-3 flex space-x-1">
+              {item.dietary.map(tag => {
+                const dietaryOption = dietaryOptions.find(opt => opt.id === tag);
+                if (!dietaryOption) return null;
+                
+                const TagIcon = getIcon(dietaryOption.icon);
+                let bgColor = 'bg-black/50 backdrop-blur-sm';
+                
+                // Assign colors based on dietary preference
+                if (tag === 'vegetarian') bgColor = 'bg-green-600';
+                if (tag === 'vegan') bgColor = 'bg-green-700';
+                if (tag === 'gluten-free') bgColor = 'bg-yellow-600';
+                if (tag === 'dairy-free') bgColor = 'bg-blue-600';
+                if (tag === 'nut-free') bgColor = 'bg-orange-600';
+                if (tag === 'spicy') bgColor = 'bg-red-600';
+                
+                return (
+                  <div 
+                    key={tag}
+                    className={`dietary-badge ${bgColor}`}
+                    title={dietaryOption.name}
+                  >
+                    <TagIcon className="w-3.5 h-3.5" />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          
+          {/* Preparation Time */}
+          {item.preparationTime && (
+            <div className="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full flex items-center">
+              <ClockIcon className="w-3 h-3 mr-1" />
+              {item.preparationTime}
+            </div>
+          )}
+        </div>
+        
+        <div className="p-4">
+          <div className="flex justify-between items-start">
+            <h3 className="font-semibold text-lg hover:text-primary transition-colors cursor-pointer" onClick={() => openItemDetail(item)}>
+              {item.name}
+            </h3>
+            <p className="font-bold text-primary text-lg">${item.price.toFixed(2)}</p>
+          </div>
+          
+          <p className="text-surface-600 dark:text-surface-400 text-sm mt-1 line-clamp-2">{item.shortDescription || item.description}</p>
+          
+          <div className="mt-4 flex justify-between items-center">
+            <button onClick={() => toggleItemExpansion(item.id)} className="flex items-center text-sm text-primary hover:text-primary-dark">
+              <InfoIcon className="w-4 h-4 mr-1" />
+              {isExpanded ? 'Less Info' : 'More Info'}
+              <ChevronDownIcon className={`w-4 h-4 ml-1 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+            </button>
+            
+            <div className="flex items-center" onClick={e => e.stopPropagation()}>
+              <div className="flex items-center border border-surface-200 dark:border-surface-700 rounded-lg mr-2">
+                <button 
+                  onClick={() => updateQuantity(item.id, -1)}
+                  className="p-1 text-surface-500 hover:text-surface-700"
+                >
+                  <MinusIcon className="w-4 h-4" />
+                </button>
+                <span className="w-6 text-center text-sm">{itemQuantities[item.id] || 1}</span>
+                <button 
+                  onClick={() => updateQuantity(item.id, 1)}
+                  className="p-1 text-surface-500 hover:text-surface-700"
+                >
+                  <PlusIcon className="w-4 h-4" />
+                </button>
+              </div>
+              <button 
+                className="btn btn-primary py-1.5 text-sm"
+                onClick={() => handleAddToCart(item)}
+              >
+                Add
+              </button>
+            </div>
+          </div>
+          
+          {/* Expandable Ingredients & Allergens Section */}
+          <AnimatePresence>
+            {isExpanded && item.ingredients && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div className="ingredients-list">
+                  <p className="font-medium mb-1">Ingredients:</p>
+                  <p>{item.ingredients.join(', ')}</p>
+                  
+                  {item.allergens && item.allergens.length > 0 && (
+                    <div className="mt-2">
+                      <p className="font-medium mb-1">Allergens:</p>
+                      <p>Contains: <span className="allergen-highlight">{item.allergens.join(', ')}</span></p>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.div>
+    );
+  };
+  
   return (
     <div className="pt-2 pb-16 space-y-6 relative">
       {/* Header with title and search */}
@@ -482,23 +629,18 @@ const Menu = () => {
                 </div>
               )}
             </LayoutGroup>
-            </div>
           ) : (
+            <div className="text-center py-16">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-surface-100 dark:bg-surface-800 rounded-full mb-6">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-surface-100 dark:bg-surface-800 rounded-full mb-4">
                 <UtensilsIcon className="w-8 h-8 text-surface-400" />
+              </div>
               <h3 className="text-xl font-medium">No matching items found</h3>
-              <h3 className="text-lg font-medium">No items found</h3>
               <p className="text-surface-500 dark:text-surface-400 mt-2 max-w-md mx-auto">
                 Try adjusting your filters or search query to find what you're looking for.
               </p>
               <button 
                 className="btn btn-outline mt-4"
-                onClick={() => {
-                  setActiveCategory('all');
-                  setSearchQuery('');
-                  setDietaryFilters([]);
-                }}
+                onClick={resetAllFilters}
               >
                 Reset All Filters
               </button>
@@ -512,157 +654,6 @@ const Menu = () => {
       <CartIndicator />
     </div>
   );
-};
-
-export default Menu;
-  );
-  
-  // Render a single menu item card
-  function renderMenuItemCard(item) {
-    const isExpanded = expandedItemId === item.id;
-    const tagsToShow = [];
-    
-    // Add special tags
-    if (item.signature) tagsToShow.push('signature');
-    if (item.seasonal) tagsToShow.push('seasonal');
-    if (item.tags && item.tags.includes('new')) tagsToShow.push('new');
-    if (item.tags && item.tags.includes('popular')) tagsToShow.push('popular');
-    if (item.tags && item.tags.includes('spicy')) tagsToShow.push('spicy');
-    
-    return (
-      <motion.div
-        key={item.id}
-        layout="position"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
-        className="menu-card"
-      >
-        <div className="relative overflow-hidden cursor-pointer" onClick={() => openItemDetail(item)}>
-          <LazyImage 
-            src={item.image} 
-            alt={item.name}
-            className="h-48 overflow-hidden"
-          />
-          
-          {/* Special Tags (New, Signature, Seasonal) */}
-          {tagsToShow.length > 0 && (
-            <div className="absolute top-3 left-3 flex flex-wrap">
-              {tagsToShow.map(tag => renderTag(tag))}
-            </div>
-          )}
-          
-          {/* Dietary Badges */}
-          {item.dietary.length > 0 && (
-            <div className="absolute bottom-3 left-3 flex space-x-1">
-              {item.dietary.map(tag => {
-                const dietaryOption = dietaryOptions.find(opt => opt.id === tag);
-                if (!dietaryOption) return null;
-                
-                const TagIcon = getIcon(dietaryOption.icon);
-                let bgColor = 'bg-black/50 backdrop-blur-sm';
-                
-                // Assign colors based on dietary preference
-                if (tag === 'vegetarian') bgColor = 'bg-green-600';
-                if (tag === 'vegan') bgColor = 'bg-green-700';
-                if (tag === 'gluten-free') bgColor = 'bg-yellow-600';
-                if (tag === 'dairy-free') bgColor = 'bg-blue-600';
-                if (tag === 'nut-free') bgColor = 'bg-orange-600';
-                if (tag === 'spicy') bgColor = 'bg-red-600';
-                
-                return (
-                  <div 
-                    key={tag}
-                    className={`dietary-badge ${bgColor}`}
-                    title={dietaryOption.name}
-                  >
-                    <TagIcon className="w-3.5 h-3.5" />
-                  </div>
-                );
-              })}
-            </div>
-          )}
-          
-          {/* Preparation Time */}
-          {item.preparationTime && (
-            <div className="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full flex items-center">
-              <ClockIcon className="w-3 h-3 mr-1" />
-              {item.preparationTime}
-            </div>
-          )}
-        </div>
-        
-        <div className="p-4">
-          <div className="flex justify-between items-start">
-            <h3 className="font-semibold text-lg hover:text-primary transition-colors cursor-pointer" onClick={() => openItemDetail(item)}>
-              {item.name}
-            </h3>
-            <p className="font-bold text-primary text-lg">${item.price.toFixed(2)}</p>
-          </div>
-          
-          <p className="text-surface-600 dark:text-surface-400 text-sm mt-1 line-clamp-2">{item.shortDescription || item.description}</p>
-          
-          <div className="mt-4 flex justify-between items-center">
-            <button onClick={() => toggleItemExpansion(item.id)} className="flex items-center text-sm text-primary hover:text-primary-dark">
-              <InfoIcon className="w-4 h-4 mr-1" />
-              {isExpanded ? 'Less Info' : 'More Info'}
-              <ChevronDownIcon className={`w-4 h-4 ml-1 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-            </button>
-            
-            <div className="flex items-center" onClick={e => e.stopPropagation()}>
-              <div className="flex items-center border border-surface-200 dark:border-surface-700 rounded-lg mr-2">
-                <button 
-                  onClick={() => updateQuantity(item.id, -1)}
-                  className="p-1 text-surface-500 hover:text-surface-700"
-                >
-                  <MinusIcon className="w-4 h-4" />
-                </button>
-                <span className="w-6 text-center text-sm">{itemQuantities[item.id] || 1}</span>
-                <button 
-                  onClick={() => updateQuantity(item.id, 1)}
-                  className="p-1 text-surface-500 hover:text-surface-700"
-                >
-                  <PlusIcon className="w-4 h-4" />
-                </button>
-              </div>
-              <button 
-                className="btn btn-primary py-1.5 text-sm"
-                onClick={() => handleAddToCart(item)}
-              >
-                Add
-              </button>
-            </div>
-          </div>
-          
-          {/* Expandable Ingredients & Allergens Section */}
-          <AnimatePresence>
-            {isExpanded && item.ingredients && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
-              >
-                <div className="ingredients-list">
-                  <p className="font-medium mb-1">Ingredients:</p>
-                  <p>{item.ingredients.join(', ')}</p>
-                  
-                  {item.allergens && item.allergens.length > 0 && (
-                    <div className="mt-2">
-                      <p className="font-medium mb-1">Allergens:</p>
-                      <p>Contains: <span className="allergen-highlight">{item.allergens.join(', ')}</span></p>
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </motion.div>
-    );
-  }
 };
 
 export default Menu;

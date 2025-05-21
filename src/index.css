@@ -101,6 +101,73 @@
   .ingredients-list {
     @apply text-sm text-surface-600 dark:text-surface-400 leading-relaxed border-t border-surface-100 dark:border-surface-700 pt-3 mt-3;
   }
+  
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+  }
+  
+  .fixed-header {
+    @apply fixed top-0 left-0 right-0 z-40;
+  }
+  
+  .fixed-footer {
+    @apply fixed bottom-0 left-0 right-0 z-40;
+  }
+
+  .menu-image-hover {
+    @apply hover:scale-105 hover:brightness-105;
+  }
+
+  .allergen-highlight {
+    @apply font-medium text-red-600 dark:text-red-400;
+  }
+}
+  .menu-card {
+    @apply bg-white dark:bg-surface-800 rounded-xl shadow-sm overflow-hidden border border-surface-100 dark:border-surface-700;
+    @apply transition-all duration-300 hover:shadow-md;
+  }
+  
+  .menu-image {
+    @apply w-full h-48 object-cover transition-transform duration-300;
+  }
+  
+  .menu-tag {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .menu-tag-signature {
+    @apply bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300;
+  }
+  
+  .menu-tag-seasonal {
+    @apply bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300;
+  }
+  
+  .menu-tag-popular {
+    @apply bg-pink-100 text-pink-800 dark:bg-pink-900/30 dark:text-pink-300;
+  }
+  
+  .menu-tag-new {
+    @apply bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300;
+  }
+  
+  .dietary-badge {
+    @apply w-6 h-6 flex items-center justify-center rounded-full text-white text-xs;
+  }
+  
+  .ingredients-list {
+    @apply text-sm text-surface-600 dark:text-surface-400 leading-relaxed border-t border-surface-100 dark:border-surface-700 pt-3 mt-3;
+  }
 }
 
 @layer utilities {
