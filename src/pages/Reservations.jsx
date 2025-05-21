@@ -1,16 +1,22 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Provider } from 'react-redux';
 import MainFeature from '../components/MainFeature';
+import TableReservation from '../components/reservation/TableReservation';
 import { getIcon } from '../utils/iconUtils';
+import { store } from '../app/store';
 
 // Import icons
 const MapPinIcon = getIcon('map-pin');
 const PhoneIcon = getIcon('phone');
 const ClockIcon = getIcon('clock');
 const ChevronRightIcon = getIcon('chevron-right');
+const CalendarIcon = getIcon('calendar');
+const TableIcon = getIcon('layout-grid');
 
 function Reservations() {
   const [showPolicy, setShowPolicy] = useState(false);
+  const [activeTab, setActiveTab] = useState('quick');
   
   return (
     <div className="py-4">
@@ -21,11 +27,38 @@ function Reservations() {
             Reserve your table at Bistro Elegante for a memorable dining experience
           </p>
         </div>
+
+        {/* Reservation Type Tabs */}
+        <div className="border-b border-surface-200 dark:border-surface-700 mb-6">
+          <div className="flex space-x-8">
+            <button
+              onClick={() => setActiveTab('quick')}
+              className={`pb-2 px-1 text-sm font-medium flex items-center border-b-2 ${
+                activeTab === 'quick'
+                ? 'border-primary text-primary'
+                : 'border-transparent text-surface-600 dark:text-surface-400 hover:text-surface-800 dark:hover:text-surface-200'
+              }`}
+            >
+              <CalendarIcon className="w-4 h-4 mr-2" />
+              Quick Reservation
+            </button>
+            
+            <button
+              onClick={() => setActiveTab('table')}
+              className={`pb-2 px-1 text-sm font-medium flex items-center border-b-2 ${
+                activeTab === 'table'
+                ? 'border-primary text-primary'
+                : 'border-transparent text-surface-600 dark:text-surface-400 hover:text-surface-800 dark:hover:text-surface-200'
+              }`}
+            >
+              <TableIcon className="w-4 h-4 mr-2" />
+              Table Selection
+            </button>
+          </div>
+        </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <MainFeature />
-          </div>
+          <div className="lg:col-span-2">{activeTab === 'quick' ? <MainFeature /> : <Provider store={store}><TableReservation /></Provider>}</div>
           
           <div className="space-y-6">
             {/* Restaurant Information */}

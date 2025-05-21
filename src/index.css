@@ -165,6 +165,27 @@
     @apply w-6 h-6 flex items-center justify-center rounded-full text-white text-xs;
   }
   
+
+  /* Floor plan table visualization */
+  .table-round {
+    @apply rounded-full bg-white dark:bg-surface-800 border-2 border-surface-300 dark:border-surface-600;
+  }
+  
+  .table-rectangle {
+    @apply rounded-md bg-white dark:bg-surface-800 border-2 border-surface-300 dark:border-surface-600;
+  }
+  
+  .table-booth {
+    @apply rounded-t-none rounded-b-xl bg-white dark:bg-surface-800 border-2 border-t-0 border-surface-300 dark:border-surface-600;
+  }
+  
+  .table-unavailable {
+    @apply opacity-40 cursor-not-allowed;
+  }
+  
+  .table-selected {
+    @apply ring-2 ring-primary ring-offset-2 z-10;
+  }
   .ingredients-list {
     @apply text-sm text-surface-600 dark:text-surface-400 leading-relaxed border-t border-surface-100 dark:border-surface-700 pt-3 mt-3;
   }
