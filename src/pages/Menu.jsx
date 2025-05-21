@@ -6,6 +6,8 @@ import { getIcon } from '../utils/iconUtils';
 const SearchIcon = getIcon('search');
 const FilterIcon = getIcon('filter');
 const ChevronDownIcon = getIcon('chevron-down');
+const XIcon = getIcon('x');
+const UtensilsIcon = getIcon('utensils');
 
 const Menu = () => {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -187,7 +189,7 @@ const Menu = () => {
               onClick={() => setSearchQuery('')}
               aria-label="Clear search"
             >
-              <getIcon('x').type className="w-4 h-4" />
+              <XIcon className="w-4 h-4" />
             </button>
           )}
         </div>
@@ -342,7 +344,7 @@ const Menu = () => {
           ) : (
             <div className="text-center py-12">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-surface-100 dark:bg-surface-800 rounded-full mb-4">
-                <getIcon('utensils').type className="w-8 h-8 text-surface-400" />
+                <UtensilsIcon className="w-8 h-8 text-surface-400" />
               </div>
               <h3 className="text-lg font-medium">No items found</h3>
               <p className="text-surface-500 dark:text-surface-400 mt-2 max-w-md mx-auto">
