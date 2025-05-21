@@ -218,7 +218,7 @@ const Menu = () => {
       case 'signature':
         tagClass = 'menu-tag-signature';
         icon = <StarIcon className="w-3 h-3 mr-1" />;
-        {tagText}
+        tagText = "Chef's Signature";
         break;
       case 'new':
         tagClass = 'menu-tag-new';
@@ -237,7 +237,7 @@ const Menu = () => {
     return (
       <div className={`menu-tag ${tagClass} mr-2 mb-2`}>
         {icon}
-        {TagComponent}
+        {tagText}
       </div>
     );
   };
