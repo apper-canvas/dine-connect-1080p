@@ -200,6 +200,7 @@ const Menu = () => {
   // Render a menu tag
   const renderTag = (tagName) => {
     let TagComponent;
+    let tagText = '';
     let tagClass = '';
     let icon = null;
     
@@ -207,27 +208,27 @@ const Menu = () => {
       case 'popular':
         tagClass = 'menu-tag-popular';
         icon = <StarIcon className="w-3 h-3 mr-1" />;
-        TagComponent = 'Most Popular';
+        tagText = 'Most Popular';
         break;
       case 'seasonal':
         tagClass = 'menu-tag-seasonal';
         icon = <CalendarIcon className="w-3 h-3 mr-1" />;
-        TagComponent = 'Seasonal';
+        tagText = 'Seasonal';
         break;
       case 'signature':
         tagClass = 'menu-tag-signature';
         icon = <StarIcon className="w-3 h-3 mr-1" />;
-        TagComponent = 'Signature Dish';
+        {tagText}
         break;
       case 'new':
         tagClass = 'menu-tag-new';
         icon = <StarIcon className="w-3 h-3 mr-1" />;
-        TagComponent = 'New';
+        tagText = 'New';
         break;
       case 'spicy':
         tagClass = 'menu-tag-popular';
-        icon = getIcon('flame');
-        TagComponent = 'Spicy';
+        icon = React.createElement(getIcon('flame'), { className: "w-3 h-3 mr-1" });
+        tagText = 'Spicy';
         break;
       default:
         return null;
