@@ -103,69 +103,6 @@
   }
   
 
-@layer utilities {
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
-  }
-  
-  .fixed-header {
-    @apply fixed top-0 left-0 right-0 z-40;
-  }
-  
-  .fixed-footer {
-    @apply fixed bottom-0 left-0 right-0 z-40;
-  }
-
-  .menu-image-hover {
-    @apply hover:scale-105 hover:brightness-105;
-  }
-
-  .allergen-highlight {
-    @apply font-medium text-red-600 dark:text-red-400;
-  }
-}
-  .menu-card {
-    @apply bg-white dark:bg-surface-800 rounded-xl shadow-sm overflow-hidden border border-surface-100 dark:border-surface-700;
-    @apply transition-all duration-300 hover:shadow-md;
-  }
-  
-  .menu-image {
-    @apply w-full h-48 object-cover transition-transform duration-300;
-  }
-  
-  .menu-tag {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-  }
-  
-  .menu-tag-signature {
-    @apply bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300;
-  }
-  
-  .menu-tag-seasonal {
-    @apply bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300;
-  }
-  
-  .menu-tag-popular {
-    @apply bg-pink-100 text-pink-800 dark:bg-pink-900/30 dark:text-pink-300;
-  }
-  
-  .menu-tag-new {
-    @apply bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300;
-  }
-  
-  .dietary-badge {
-    @apply w-6 h-6 flex items-center justify-center rounded-full text-white text-xs;
-  }
-  
-
   /* Floor plan table visualization */
   .table-round {
     @apply rounded-full bg-white dark:bg-surface-800 border-2 border-surface-300 dark:border-surface-600;
@@ -185,8 +122,45 @@
   
   .table-selected {
     @apply ring-2 ring-primary ring-offset-2 z-10;
+
+  /* Daily specials components */
+  .specials-card {
+    @apply bg-gradient-to-r from-primary/10 to-secondary/10 dark:from-primary/5 dark:to-secondary/5 rounded-xl p-5 border border-surface-200 dark:border-surface-700;
+    @apply relative overflow-hidden transition-all duration-300;
   }
-  .ingredients-list {
+
+  .special-tag {
+    @apply absolute top-3 right-3 bg-accent text-surface-900 font-medium text-xs px-2 py-1 rounded-md z-10;
+  }
+
+  .special-timer {
+    @apply flex items-center justify-center bg-surface-800/80 dark:bg-surface-900/80 text-white px-3 py-1.5 rounded-lg;
+    @apply backdrop-blur-sm text-sm font-mono;
+  }
+
+  .special-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  .special-badge-limited {
+    @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300;
+  }
+
+  .special-badge-new {
+    @apply bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300;
+  }
+
+  .special-badge-featured {
+    @apply bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300;
+  }
+
+  .chef-video-wrapper {
+    @apply relative rounded-lg overflow-hidden bg-surface-200 dark:bg-surface-700;
+    @apply aspect-video w-full;
+  }
+
+  .notification-badge {
+    @apply absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full;
     @apply text-sm text-surface-600 dark:text-surface-400 leading-relaxed border-t border-surface-100 dark:border-surface-700 pt-3 mt-3;
   }
 }
@@ -218,5 +192,13 @@
 
   .allergen-highlight {
     @apply font-medium text-red-600 dark:text-red-400;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .swiper-special-pagination {
+    @apply bottom-0 !important;
   }
 }

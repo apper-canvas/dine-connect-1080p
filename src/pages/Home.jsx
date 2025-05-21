@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getIcon } from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
+import DailySpecials from '../components/specials/DailySpecials';
 
 // Import icons
 const StarIcon = getIcon('star');
@@ -102,6 +103,9 @@ function Home() {
           </div>
         </motion.div>
       )}
+      
+      {/* Daily Specials Section */}
+      <DailySpecials />
       
       {/* Main Interactive Feature */}
       <MainFeature />

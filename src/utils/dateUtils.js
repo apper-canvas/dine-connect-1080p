@@ -1,12 +1,55 @@
-import { format, addDays, isToday, addMinutes, parse, isBefore } from 'date-fns';
+import { format, parseISO, isValid, addDays, startOfDay, differenceInSeconds } from 'date-fns';
 import { BUSINESS_HOURS } from './restaurantData';
 
 /**
  * Formats a date object to display as a date string
  * @param {Date} date - The date to format
  * @returns {string} Formatted date string (e.g., "Monday, Jan 1")
- */
 export const formatDisplayDate = (date) => {
+export const getDatePlus = (days) => addDays(startOfDay(new Date()), days);
+
+/**
+ * Format a countdown in a human-readable format
+ * @param {Date} targetDate The target date to countdown to
+ * @returns {Object} Object containing days, hours, minutes, seconds and a formatted string
+ */
+export const formatCountdown = (targetDate) => {
+  if (!targetDate || !isValid(new Date(targetDate))) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0, formatted: '00:00:00' };
+  }
+
+  const now = new Date();
+  const target = new Date(targetDate);
+  const totalSeconds = differenceInSeconds(target, now);
+  
+  if (totalSeconds <= 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0, formatted: '00:00:00', expired: true };
+  }
+
+  // Calculate time components
+  const days = Math.floor(totalSeconds / (60 * 60 * 24));
+  const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+  const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+  const seconds = Math.floor(totalSeconds % 60);
+
+  // Format for display
+  let formatted = '';
+  
+  if (days > 0) {
+    formatted = `${days}d ${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+  } else {
+    formatted = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+  }
+
+  return { days, hours, minutes, seconds, formatted };
+};
+
+/**
+ * Helper to pad numbers with leading zeros
+ */
+const padZero = (num) => {
+  return num.toString().padStart(2, '0');
+};
   return format(date, 'EEEE, MMM d');
 };
 

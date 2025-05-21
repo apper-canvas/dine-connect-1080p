@@ -45,8 +45,17 @@ export default {
         'xl': '0.75rem',
         '2xl': '1rem'
       }
+    },
+    keyframes: {
+      pulse: {
+        '0%, 100%': { opacity: 1 },
+        '50%': { opacity: 0.5 }
+      }
+    },
+    animation: {
+      pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
     }
   },
-  plugins: [],
   darkMode: 'class',
+  plugins: [],
 }
