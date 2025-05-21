@@ -227,7 +227,8 @@ const Menu = () => {
         break;
       case 'spicy':
         tagClass = 'menu-tag-popular';
-        icon = <getIcon('flame') className="w-3 h-3 mr-1" />;
+        const FlameIcon = getIcon('flame');
+        icon = <FlameIcon className="w-3 h-3 mr-1" />;
         tagText = "Spicy";
         break;
       default:
