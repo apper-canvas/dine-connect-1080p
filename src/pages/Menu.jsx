@@ -663,3 +663,6 @@ export default Menu;
       </motion.div>
     );
   }
+};
+
+export default Menu;
