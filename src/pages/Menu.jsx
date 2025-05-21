@@ -273,7 +273,7 @@ const Menu = () => {
           {/* Special Tags (New, Signature, Seasonal) */}
           {tagsToShow.length > 0 && (
             <div className="absolute top-3 left-3 flex flex-wrap">
-              {tagsToShow.map(tag => renderTag(tag))}
+              {tagsToShow.map(tag => <div key={tag}>{renderTag(tag)}</div>)}
             </div>
           )}
           
@@ -283,7 +283,7 @@ const Menu = () => {
               {item.dietary.map(tag => {
                 const dietaryOption = dietaryOptions.find(opt => opt.id === tag);
                 if (!dietaryOption) return null;
-                
+
                 const TagIcon = getIcon(dietaryOption.icon);
                 let bgColor = 'bg-black/50 backdrop-blur-sm';
                 
