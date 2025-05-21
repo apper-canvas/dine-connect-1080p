@@ -227,8 +227,8 @@ const Menu = () => {
         break;
       case 'spicy':
         tagClass = 'menu-tag-popular';
-        icon = React.createElement(getIcon('flame'), { className: "w-3 h-3 mr-1" });
-        tagText = 'Spicy';
+        icon = <getIcon('flame') className="w-3 h-3 mr-1" />;
+        tagText = "Spicy";
         break;
       default:
         return null;
