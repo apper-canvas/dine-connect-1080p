@@ -1,11 +1,11 @@
-import { format, parseISO, isValid, addDays, startOfDay, differenceInSeconds } from 'date-fns';
+import { format, parseISO, isValid, addDays, startOfDay, differenceInSeconds, parse, isToday, isBefore, addMinutes } from 'date-fns';
 import { BUSINESS_HOURS } from './restaurantData';
 
 /**
  * Formats a date object to display as a date string
  * @param {Date} date - The date to format
  * @returns {string} Formatted date string (e.g., "Monday, Jan 1")
-export const formatDisplayDate = (date) => {
+ */
 export const getDatePlus = (days) => addDays(startOfDay(new Date()), days);
 
 /**
@@ -50,8 +50,14 @@ export const formatCountdown = (targetDate) => {
 const padZero = (num) => {
   return num.toString().padStart(2, '0');
 };
+
+/**
+ * Formats a date object to display as a date string
+ * @param {Date} date - The date to format
+ * @returns {string} Formatted date string (e.g., "Monday, Jan 1")
+ */
+export const formatDisplayDate = (date) => {
   return format(date, 'EEEE, MMM d');
-};
 
 /**
  * Gets the day type (weekday vs weekend) for hour determination
