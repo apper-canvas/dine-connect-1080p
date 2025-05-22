@@ -406,6 +406,7 @@ function Info() {
           </motion.div>
         </div>
       
+      </section>
       {/* Meet the Team Section */}
       <section className="container-custom info-section">
         <motion.h2 
@@ -521,6 +522,7 @@ function Info() {
                 </div>
               </motion.div>
             </SwiperSlide>
+            ))}
           ))}
         </Swiper>
       </section>
@@ -612,7 +614,7 @@ function Info() {
       <section className="container-custom mt-16 mb-8 text-center">
         <a href="#reserve" className="btn btn-primary text-lg px-8 py-3">Reserve Your Table Today</a>
       </section>
-    </div>  
+    </div>
   );
 }
 
