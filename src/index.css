@@ -167,7 +167,6 @@
     @apply text-sm text-surface-600 dark:text-surface-400 leading-relaxed border-t border-surface-100 dark:border-surface-700 pt-3 mt-3;
   }
 }
-}
 
 @layer components {
   /* Modern gallery grid for Info page */

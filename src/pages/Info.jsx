@@ -404,7 +404,6 @@ function Info() {
               </div>
             </div>
           </motion.div>
-          </div>
       </section>
       
       {/* Meet the Team Section */}
@@ -520,6 +519,7 @@ function Info() {
                   <p className="font-bold">{testimonial.name}</p>
                   <p className="text-sm text-surface-500 dark:text-surface-400">{testimonial.date}</p>
                 </div>
+              </motion.div>
               </div>
             </SwiperSlide>
           ))}
