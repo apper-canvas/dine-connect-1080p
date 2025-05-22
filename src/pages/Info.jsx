@@ -403,6 +403,7 @@ function Info() {
                 </form>
               </div>
             </div>
+          </motion.div>
           </div>
         </div>
       </section>
