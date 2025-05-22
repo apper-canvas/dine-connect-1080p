@@ -404,7 +404,7 @@ function Info() {
               </div>
             </div>
           </motion.div>
-      </section>
+        </div>
       
       {/* Meet the Team Section */}
       <section className="container-custom info-section">
@@ -520,7 +520,6 @@ function Info() {
                   <p className="text-sm text-surface-500 dark:text-surface-400">{testimonial.date}</p>
                 </div>
               </motion.div>
-              </div>
             </SwiperSlide>
           ))}
         </Swiper>
