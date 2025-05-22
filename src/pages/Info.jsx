@@ -405,7 +405,6 @@ function Info() {
             </div>
           </motion.div>
           </div>
-        </div>
       </section>
       
       {/* Meet the Team Section */}
